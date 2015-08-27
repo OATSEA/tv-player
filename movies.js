@@ -32,30 +32,38 @@ function setup() {
 } // END setup
 		
 function playvid(value) {
-	// alert(value);
 	var video = document.getElementById(value);
+       // alert(video)
 	if(video.paused){
-		video.play(); 
-		video.webkitRequestFullScreen();
+        //alert(video.played)
+     // video.currentTime=500;
+            	video.play(); 
+                
+            
 		$('#overlay').addClass('hideMe');
-		
-	} else {
-		video.pause();
-		$('#overlay').removeClass('hideMe');
-		
-		// video.webkitExitFullScreen();
-	}
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                  } else if (video.mozRequestFullScreen) {
+                    video.mozRequestFullScreen();
+                  } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                  }
+       } else   {
+                   video.pause();
+		   //$('#overlay').removeClass('hideMe');
+                   //$("#"+value).removeClass("showVideo");
+		   video.webkitExitFullScreen();
+                }
 	
 	// make this button highlighted to indicate played
 	var button = value+"_icon";
-	$('#'+button).addClass("played");
-
+        $('#'+button).addClass("played");
 } // END playvid
 
 function videoEnded(value) {
 	// alert(value);
 	var video = document.getElementById(value);
-	video.webkitExitFullScreen();
+	//video.webkitExitFullScreen();
 
 } // END playvid
 

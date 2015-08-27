@@ -1,6 +1,7 @@
 <?php
-
-
+$sFolderPath = $_SERVER['DOCUMENT_ROOT'];
+$sDestination ='../../data/constants.php';
+require_once $sDestination;
 // Start output buffering
 ob_start();
 // run code in x.php file
@@ -17,19 +18,19 @@ $defaultNavJPG="nav.jpg";
 $defaultNavPNG="nav.png";
 $folderNav="nav.jpg";
 $loopCount=0;
-$baseFolder="movies";
+$baseFolder="movies";//(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies' : 'content/movies';
 $folderName="movies";
 $navHTML="";
 $thumbsHTML="";
 $movieHTML="";
-$scriptDir = dirname($_SERVER['SCRIPT_NAME']);
-$fullPathPrefix = $_SERVER['DOCUMENT_ROOT'];
+$scriptDir = ROOT_DIR;
+$fullPathPrefix = ROOT_DIR;
 
 if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder"];}
 // echo "FolderName: ".$folderName;
   $folderName = str_replace($scriptDir."/", '', $folderName);
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 	<title><?php echo $folderName; ?></title>
@@ -57,15 +58,14 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 $rootFolder = preg_replace( '~(\w)$~' , '$1' . DIRECTORY_SEPARATOR , realpath( getcwd() ) );
 $navCount=0;
 
-$moviesDir = str_replace("payloads/OATSEA-tv-player", 'content', $rootFolder);
-
+$moviesDir = str_replace("payloads\OATSEA-tv-player", 'content', $rootFolder);
 $all="'All'";
 			echo '<img class="mybutton" id="All_nav" alt="All" src="icons.png" onTouchStart="location.reload();" onclick="location.reload();" />';	
 $navdir = new RecursiveDirectoryIterator( $moviesDir.$folderName,FilesystemIterator::SKIP_DOTS );
 foreach(new RecursiveIteratorIterator($navdir,RecursiveIteratorIterator::SELF_FIRST) as $file) {
 
 	$filename= $file->getFilename();
-	$itemUrl = str_replace($_SERVER['DOCUMENT_ROOT'], '', $file);
+	$itemUrl = str_replace(ROOT_DIR, '', $file);
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
 	$title = $filename;
@@ -103,7 +103,7 @@ echo "<div id='maincontent'/>";
 $dir = new RecursiveDirectoryIterator( $moviesDir.$folderName,FilesystemIterator::SKIP_DOTS );
 foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST) as $file) {
 
- 	$filename= $file->getFilename(); 
+        $filename= $file->getFilename();
 	// echo "<p>File: ".$filename."</p>";
 	// $filePath= 
 	// echo "filename:".$filename."</p>";
@@ -117,7 +117,8 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 	if (strlen($title)<=8) { $titleLen=strlen($title);}
 	$shortTitle = substr( $title ,0,$titleLen);
     $itemID="'".$title."'";
-	$itemUrl = str_replace($_SERVER['DOCUMENT_ROOT'], '', $file);
+    
+    	$itemUrl = (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/movies/test/'.$filename : SITE_URL.'/content/movies/test/'.$filename;//str_replace(SITE_URL,'', $filename);
 	
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
@@ -127,42 +128,40 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 	if ((substr( $filename ,0,1) != ".")&&($checkApple===false)) {
 		
 		// Is it a movie file or directory?
-		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {
-						
-						
+		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
 						
 			$tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
-			$imageURLJPG=$currentFolder.$title.$jpg;
-			$imageURLPNG=$currentFolder.$title.$png;
-			$imageURLdefaultJPG=$currentFolder.$defaultNavJPG;
-			$imageURLdefaultPNG=$currentFolder.$defaultNavPNG;
+			$imageURLJPG = $title.$jpg;
+			$imageURLPNG = $title.$png;
+			$imageURLdefaultJPG = $defaultNavJPG;
+			$imageURLdefaultPNG = $defaultNavPNG;
 			
-			$thisFullImagePathJPG=$fullPathPrefix.$imageURLJPG;
-			$thisFullImagePathPNG=$fullPathPrefix.$imageURLPNG;
-			$thisFullImagePathDefaultJPG=$fullPathPrefix.$imageURLdefaultJPG;
-			$thisFullImagePathDefaultPNG=$fullPathPrefix.$imageURLdefaultPNG;					
-						
+			$thisFullImagePathJPG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : 'content/movies/test/'.$imageURLJPG;
+			$thisFullImagePathPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
+			$thisFullImagePathDefaultJPG =SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
+			$thisFullImagePathDefaultPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;					
+                        //echo ROOT_DIR;
 			// If there's no thumbnail for this movie use either the default one in this folder or if that doesn't exist the default one
 
 				if(file_exists($thisFullImagePathJPG)) { 
-					$imageURL=$imageURLJPG;
+					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : '/content/movies/test/'.$imageURLJPG;
 				}   else if(file_exists($thisFullImagePathPNG)){
-					$imageURL=$imageURLPNG;
+					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
 				} else if(file_exists($thisFullImagePathDefaultJPG)){ 
-					$imageURL=$imageURLdefaultJPG;
+                                        $imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
 					
 				} else if(file_exists($thisFullImagePathDefaultPNG)){
-					$imageURL=$imageURLdefaultPNG;
+					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;
 				} else {
 					$imageURL=$defaultNav;
 				} // END thumbs image exists test
-				
-			$iconID=$title."_icon";		
-		    echo '<div class="myfig'.$tags.'"><img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" /><p class="imgtitle">'.$displayTitle.'</p>';
-			
-		    echo '<video onClick="playvid('.$itemID.');" class="videoclip" id="'.$title.'" width="1" height="1" controls preload="none" onended="videoEnded('.$itemID.')">
+                        //header("Content-Type: video/mp4");
+                        $iconID=$title."_icon";
+                        //<img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" />
+		    echo '<div class="myfig '.$tags.'"><img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" /><p class="imgtitle">'.$displayTitle.'</p>';
+                    echo '<video onClick="playvid('.$itemID.');" class="videoclip" id="'.$title.'" width="1" height="1" controls preload="none" onended="videoEnded('.$itemID.')">
 			  <source src="'.$itemUrl.'" type="video/mp4"> 
 				  Your browser does not support the video tag.
 			  </video> </div>
