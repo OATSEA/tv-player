@@ -1,5 +1,4 @@
 <?php
-$sFolderPath = $_SERVER['DOCUMENT_ROOT'];
 $sDestination ='../../data/constants.php';
 require_once $sDestination;
 // Start output buffering
@@ -58,7 +57,7 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 $rootFolder = preg_replace( '~(\w)$~' , '$1' . DIRECTORY_SEPARATOR , realpath( getcwd() ) );
 $navCount=0;
 
-$moviesDir = str_replace("payloads\OATSEA-tv-player", 'content', $rootFolder);
+$moviesDir = str_replace("payloads".DIRECTORY_SEPARATOR."OATSEA-tv-player", 'content', $rootFolder);
 $all="'All'";
 			echo '<img class="mybutton" id="All_nav" alt="All" src="icons.png" onTouchStart="location.reload();" onclick="location.reload();" />';	
 $navdir = new RecursiveDirectoryIterator( $moviesDir.$folderName,FilesystemIterator::SKIP_DOTS );
