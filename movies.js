@@ -52,7 +52,7 @@ function playvid(value) {
                    video.pause();
 		   //$('#overlay').removeClass('hideMe');
                    //$("#"+value).removeClass("showVideo");
-		   video.webkitExitFullScreen();
+		   //video.webkitExitFullScreen();
                 }
 	
 	// make this button highlighted to indicate played
