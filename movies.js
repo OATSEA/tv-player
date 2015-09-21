@@ -37,7 +37,9 @@ function playvid(value) {
 	if(video.paused){
         //alert(video.played)
      // video.currentTime=500;
-            	video.play(); 
+            	video.addEventListener('click', function () {
+                    video.play();
+                }, false);
                 
             
 		$('#overlay').addClass('hideMe');
@@ -49,10 +51,12 @@ function playvid(value) {
                     video.webkitRequestFullscreen();
                   }
        } else   {
-                   video.pause();
+                   video.addEventListener('click', function () {
+                        video.pause();
+                    }, false);
 		   //$('#overlay').removeClass('hideMe');
                    //$("#"+value).removeClass("showVideo");
-		   //video.webkitExitFullScreen();
+		   video.webkitExitFullScreen();
                 }
 	
 	// make this button highlighted to indicate played
