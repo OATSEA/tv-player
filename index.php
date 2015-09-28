@@ -26,7 +26,6 @@ $scriptDir = SITE_URL.'content/'.TVPLAYER_LOCATION;
 $sImageUrl = SITE_URL.'content/'.TVPLAYER_LOCATION;;
 $fullPathPrefix = ROOT_DIR.'/content/'.TVPLAYER_LOCATION;
 $sExternalUrl = SITE_URL.EXTERNAL_FOLDER.'/content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
-$sExternalEmage = ROOT_DIR.EXTERNAL_FOLDER.'\content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
 
 if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder"];}
 // echo "FolderName: ".$folderName;
@@ -141,7 +140,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 		
 		// Is it a movie file or directory?
 		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
-		      $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
+		      $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
 			$tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
