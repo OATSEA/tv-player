@@ -94,14 +94,14 @@
                          
                        // $headers = @get_headers("$thisFullImagePathJPG");
                        	     if(file_exists($thisFullImagePathJPG)) { 
-					$imageURL=(EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
+					$imageURL=(EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
 				}   else if(file_exists($thisFullImagePathPNG)){
-					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
+					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
 				} else if(file_exists($thisFullImagePathDefaultJPG)){ 
-					$imageURL= (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;
+					$imageURL= (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;
 					
 				} else if(file_exists($thisFullImagePathDefaultPNG)){
-					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultPNG;
+					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultPNG;
 				} else {
 					$imageURL=$defaultNav;
 				} // END thumbs image exists test
