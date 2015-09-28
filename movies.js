@@ -30,6 +30,28 @@ function setup() {
 	        
 	});	
 } // END setup
+$('body').keypress(function(e){
+   
+    if (keyCode == 27)
+{
+    history.back();
+
+    if (window.event)
+    {
+        // IE works fine anyways so this isn't really needed
+        e.cancelBubble = true;
+        e.returnValue = false;
+    }
+    else if (e.stopPropagation)
+    {
+        // In firefox, this is what keeps the escape key from canceling the history.back()
+        e.stopPropagation();
+        e.preventDefault();
+    }
+
+    return (false);
+}
+});
 		
 function playvid(value) {
 	var video = document.getElementById(value);
@@ -37,12 +59,12 @@ function playvid(value) {
 	if(video.paused){
         //alert(video.played)
      // video.currentTime=500;
-            	video.addEventListener('click', function () {
-                    video.play();
-                }, false);
-                
-            
-		$('#overlay').addClass('hideMe');
+                jQuery( document ).ready(function($) {
+                $(value).click(function() {
+                $(this).get(0).paused ? $(this).get(0).play() : $(this).get(0).pause();
+           });
+              });   
+                   $('#overlay').addClass('hideMe');
                 if (video.requestFullscreen) {
                     video.requestFullscreen();
                   } else if (video.mozRequestFullScreen) {
@@ -51,31 +73,35 @@ function playvid(value) {
                     video.webkitRequestFullscreen();
                   }
        } else   {
-                   video.addEventListener('click', function () {
-                        video.pause();
-                    }, false);
-		   //$('#overlay').removeClass('hideMe');
-                   //$("#"+value).removeClass("showVideo");
-		   video.webkitExitFullScreen();
+                   
+		   $('#overlay').removeClass('hideMe');
+                   $("#"+value).removeClass("showVideo");
+		   //video.webkitExitFullScreen();
                 }
 	
 	// make this button highlighted to indicate played
 	var button = value+"_icon";
         $('#'+button).addClass("played");
+        
+      
 } // END playvid
 
 function videoEnded(value) {
 	// alert(value);
+       
 	var video = document.getElementById(value);
-	//video.webkitExitFullScreen();
+        alert(video)
+     	//video.webkitExitFullScreen();
+        
 
 } // END playvid
 
 function doBack() {
-	// alert(value);
+
 	$('#overlay').addClass('hideMe');
+        
 	$('.videoclip').each( function() { 
-			$(this).get(0).webkitExitFullScreen(); }
+	$(this).get(0).webkitExitFullScreen(); }
 	);
 
 
@@ -99,10 +125,17 @@ function catToggle(value) {
 		if (value=="All") {
 			$('.myfig').show(); 
 		} else {
-			$('.myfig').hide(); 
-		$('.'+value).show();
+			//$('.myfig').hide(); 
+                        $('.myfig').show();
 		}
-
+                $.ajax({
+                  type: "POST",
+                  url: "list.php",
+                  data: { folder_name: value }
+                })
+                  .done(function( data ) {
+                    $("#maincontent").html(data);
+                  });
 		$('.mybutton').removeClass("played");
 		$('#'+value+'_nav').addClass("played");
 		

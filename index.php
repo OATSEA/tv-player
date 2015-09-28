@@ -17,13 +17,16 @@ $defaultNavJPG="nav.jpg";
 $defaultNavPNG="nav.png";
 $folderNav="nav.jpg";
 $loopCount=0;
-$baseFolder="movies";//(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies' : 'content/movies';
-$folderName="movies";
+$baseFolder=TVPLAYER_LOCATION;//(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies' : 'content/movies';
+$folderName=TVPLAYER_LOCATION;
 $navHTML="";
 $thumbsHTML="";
 $movieHTML="";
-$scriptDir = ROOT_DIR;
-$fullPathPrefix = ROOT_DIR;
+$scriptDir = SITE_URL.'content/'.TVPLAYER_LOCATION;
+$sImageUrl = SITE_URL.'content/'.TVPLAYER_LOCATION;;
+$fullPathPrefix = ROOT_DIR.'/content/'.TVPLAYER_LOCATION;
+$sExternalUrl = SITE_URL.EXTERNAL_FOLDER.'/content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
+$sExternalEmage = ROOT_DIR.EXTERNAL_FOLDER.'\content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
 
 if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder"];}
 // echo "FolderName: ".$folderName;
@@ -56,15 +59,16 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 
 $rootFolder = preg_replace( '~(\w)$~' , '$1' . DIRECTORY_SEPARATOR , realpath( getcwd() ) );
 $navCount=0;
-
-$moviesDir = str_replace("payloads".DIRECTORY_SEPARATOR."OATSEA-tv-player", 'content', $rootFolder);
+$moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION ;
+//str_replace("payloads".DIRECTORY_SEPARATOR."OATSEA-tv-player", 'content', $rootFolder);
 $all="'All'";
-			echo '<img class="mybutton" id="All_nav" alt="All" src="icons.png" onTouchStart="location.reload();" onclick="location.reload();" />';	
-$navdir = new RecursiveDirectoryIterator( $moviesDir.$folderName,FilesystemIterator::SKIP_DOTS );
+echo '<img class="mybutton" id="All_nav" alt="All" src="icons.png" onTouchStart="location.reload();" onclick="location.reload();" />';	
+$navdir = new RecursiveDirectoryIterator( $moviesDir,FilesystemIterator::SKIP_DOTS );
+$aDirList = array('');
 foreach(new RecursiveIteratorIterator($navdir,RecursiveIteratorIterator::SELF_FIRST) as $file) {
 
-	$filename= $file->getFilename();
-	$itemUrl = str_replace(ROOT_DIR, '', $file);
+        $filename= $file->getFilename();
+        $itemUrl = str_replace(ROOT_DIR,'', $file);
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
 	$title = $filename;
@@ -86,7 +90,7 @@ foreach(new RecursiveIteratorIterator($navdir,RecursiveIteratorIterator::SELF_FI
 			}
 			
 			$catID="'".$title."'";
-
+                        array_push($aDirList, $catID);
 			echo '<img class="mybutton" id="'.$title.'_nav" alt="'.$title.'" src="'.$thisFolderNav.'" onTouchStart="catToggle('.$catID.')" onclick="catToggle('.$catID.')" />
 			';	
 			$navCount++;
@@ -99,36 +103,45 @@ if ($navCount!=0) {echo "<hr>";}
 
 echo "<div id='maincontent'/>";
 // if ($folderName!="Movies") {
-$dir = new RecursiveDirectoryIterator( $moviesDir.$folderName,FilesystemIterator::SKIP_DOTS );
+$dir = new RecursiveDirectoryIterator( $moviesDir,FilesystemIterator::SKIP_DOTS );
+//echo count(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST));
+session_start();  
+
 foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST) as $file) {
 
-        $filename= $file->getFilename();
+     $filename= $file->getFilename();
 	// echo "<p>File: ".$filename."</p>";
 	// $filePath= 
 	// echo "filename:".$filename."</p>";
-
+       // strpos($filename,'.','-4');
+        
+     if  (!strpos($filename,'.')){
+        
+        $folderName=$filename; 
+     }
+   
 	$title = substr( $filename ,0,strlen($filename)-4);
-	$displayTitle = str_replace("-", ' ', $title);
+        $displayTitle = str_replace("-", ' ', $title);
 	$displayTitle = str_replace(".", ' ', $displayTitle);
-	$displayTitle = str_replace("_", ' ', $displayTitle);		
-	
+	$displayTitle = str_replace("_", ' ', $displayTitle);			
+         
 	$titleLen=8;
 	if (strlen($title)<=8) { $titleLen=strlen($title);}
 	$shortTitle = substr( $title ,0,$titleLen);
-    $itemID="'".$title."'";
+        $itemID="'".$title."'";
     
-    	$itemUrl = (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/movies/test/'.$filename : SITE_URL.'/content/movies/test/'.$filename;//str_replace(SITE_URL,'', $filename);
-	
+    	//$itemUrl = (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/movies/test/'.$filename : SITE_URL.'/content/movies/test/'.$filename;//str_replace(SITE_URL,'', $filename);
+        //$itemUrl = $sImageUrl.'/'.$folderName.'/'.$filename;
+      
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
-	
-	
+		
 	// check isn't a .dot or an .Apple item
 	if ((substr( $filename ,0,1) != ".")&&($checkApple===false)) {
 		
 		// Is it a movie file or directory?
 		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
-						
+		      $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
 			$tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
@@ -136,30 +149,49 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 			$imageURLPNG = $title.$png;
 			$imageURLdefaultJPG = $defaultNavJPG;
 			$imageURLdefaultPNG = $defaultNavPNG;
-			
-			$thisFullImagePathJPG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : 'content/movies/test/'.$imageURLJPG;
-			$thisFullImagePathPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
-			$thisFullImagePathDefaultJPG =SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
-			$thisFullImagePathDefaultPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;					
-                        //echo ROOT_DIR;
+                        
+                       $thisFullImagePathJPG= (EXTERNAL_TEXT == 1) ?  ROOT_DIR.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
+			$thisFullImagePathPNG=  (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
+			$thisFullImagePathDefaultJPG = (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;
+			$thisFullImagePathDefaultPNG= (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultPNG;					
+						
 			// If there's no thumbnail for this movie use either the default one in this folder or if that doesn't exist the default one
-
 				if(file_exists($thisFullImagePathJPG)) { 
-					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : '/content/movies/test/'.$imageURLJPG;
+					$imageURL=(EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
 				}   else if(file_exists($thisFullImagePathPNG)){
-					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
+					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
 				} else if(file_exists($thisFullImagePathDefaultJPG)){ 
-                                        $imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
+					$imageURL= (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;
 					
 				} else if(file_exists($thisFullImagePathDefaultPNG)){
-					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;
+					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultPNG;
 				} else {
 					$imageURL=$defaultNav;
 				} // END thumbs image exists test
+			
+//			$thisFullImagePathJPG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : 'content/movies/test/'.$imageURLJPG;
+//			$thisFullImagePathPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
+//			$thisFullImagePathDefaultJPG =SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
+//			$thisFullImagePathDefaultPNG = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;					
+                        //echo ROOT_DIR;
+			// If there's no thumbnail for this movie use either the default one in this folder or if that doesn't exist the default one
+
+//				if(file_exists($thisFullImagePathJPG)) { 
+//					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLJPG : '/content/movies/test/'.$imageURLJPG;
+//				}   else if(file_exists($thisFullImagePathPNG)){
+//					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLPNG;
+//				} else if(file_exists($thisFullImagePathDefaultJPG)){ 
+//                                        $imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultJPG;
+//					
+//				} else if(file_exists($thisFullImagePathDefaultPNG)){
+//					$imageURL = SITE_URL.'/'.(EXTERNAL_TEXT == 1) ? EXTERNAL_FOLDER.'/content/movies/test/'.$imageURLPNG : 'content/movies/test/'.$imageURLdefaultPNG;
+//				} else {
+//					$imageURL=$defaultNav;
+//				} // END thumbs image exists test
                         //header("Content-Type: video/mp4");
                         $iconID=$title."_icon";
                         //<img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" />
-		    echo '<div class="myfig '.$tags.'"><img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" /><p class="imgtitle">'.$displayTitle.'</p>';
+		    echo '<div class="myfig"><img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" /><p class="imgtitle">'.$displayTitle.'</p>';
                     echo '<video onClick="playvid('.$itemID.');" class="videoclip" id="'.$title.'" width="1" height="1" controls preload="none" onended="videoEnded('.$itemID.')" src="'.$itemUrl.'">
 			  <source src="'.$itemUrl.'" type="video/mp4"> 
 				  Your browser does not support the video tag.
@@ -172,8 +204,7 @@ echo "<hr>";
 // } // end "Movies" foldername check 
 ?>
 </div>
-    
-	<div id="overlay" class="hideMe" onClick="doBack()" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
+<div id="overlay" class="hideMe" onClick="doBack(<?php echo $fullPathPrefix; ?>)" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
 <div id="update"><center><a href="index.php">Update</a></center><br><br></div>	  	
 </body>
 </html>
