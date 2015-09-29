@@ -21,6 +21,7 @@
     $sImageUrl = SITE_URL.'content/'.TVPLAYER_LOCATION;;
     $fullPathPrefix = ROOT_DIR.'/content/'.TVPLAYER_LOCATION;
     $sExternalUrl = SITE_URL.EXTERNAL_FOLDER.'/content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
+    $sExternalEmage = ROOT_DIR.EXTERNAL_FOLDER.'\content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
     //$foldername = isset($_POST["folder_name"]) ? $_POST["folder_name"] : '';
     $moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION.DIRECTORY_SEPARATOR.$folderName ;
 
@@ -43,7 +44,7 @@
 	$shortTitle = substr( $title ,0,$titleLen);
     $itemID="'".$title."'";
     
-            $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
+        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
         //$itemUrl = $fullPathPrefix.'/'.$folderName.'/'.$filename;
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
@@ -94,7 +95,7 @@
                        // $headers = @get_headers("$thisFullImagePathJPG");
                        	     if(file_exists($thisFullImagePathJPG)) { 
 					$imageURL=(EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
-				}   else if(file_exists($thisFullImagePathPNG)){
+				} else if(file_exists($thisFullImagePathPNG)){
 					$imageURL=(EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
 				} else if(file_exists($thisFullImagePathDefaultJPG)){ 
 					$imageURL= (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;

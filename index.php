@@ -35,6 +35,7 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 <!DOCTYPE html> 
 <html>
 <head>
+    <script></script>
 	<title><?php echo $folderName; ?></title>
 	<link href="movies.css" rel="stylesheet">
 	<link href="css/font-awesome.min.css" rel="stylesheet">
@@ -45,6 +46,16 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 	<script src='jquery.imagefit.js'></script>
     <script src="movies.js"></script>
 	<script>$(document).ready(function() { setup(); }); </script>	
+        <script>
+        document.onkeydown = function (evt) {
+            
+           // alert("hiiiiiiii")
+       
+    if (evt.keyCode == 27) $(this).get(0).ended;
+}
+
+         </script>
+
 </head>
 <body class="main">
 
@@ -140,7 +151,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 		
 		// Is it a movie file or directory?
 		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
-		      $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
+		        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
 			$tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
@@ -149,7 +160,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 			$imageURLdefaultJPG = $defaultNavJPG;
 			$imageURLdefaultPNG = $defaultNavPNG;
                         
-                       $thisFullImagePathJPG= (EXTERNAL_TEXT == 1) ?  ROOT_DIR.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
+                        $thisFullImagePathJPG= (EXTERNAL_TEXT == 1) ?  ROOT_DIR.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG :  ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLJPG;
 			$thisFullImagePathPNG=  (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG;
 			$thisFullImagePathDefaultJPG = (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultJPG;
 			$thisFullImagePathDefaultPNG= (EXTERNAL_TEXT == 1) ? ROOT_DIR.'/'.EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLPNG : ROOT_DIR.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$imageURLdefaultPNG;					
