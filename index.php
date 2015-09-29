@@ -210,7 +210,7 @@ echo "<hr>";
 // } // end "Movies" foldername check 
 ?>
 </div>
-<div id="overlay" class="hideMe" onClick="doBack(<?php echo SITE_URL.$_SERVER['PHP_SELF']; ?>)" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
+<div id="overlay" class="hideMe" onClick="doBack()" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
 <div id="update"><center><a href="index.php">Update</a></center><br><br></div>	  	
 </body>
 </html>
