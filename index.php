@@ -139,15 +139,15 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
     
     	//$itemUrl = (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/movies/test/'.$filename : SITE_URL.'/content/movies/test/'.$filename;//str_replace(SITE_URL,'', $filename);
         //$itemUrl = $sImageUrl.'/'.$folderName.'/'.$filename;
-        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
-	$checkApple = strpos($itemUrl,".Apple");
+        $checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
 		
 	// check isn't a .dot or an .Apple item
 	if ((substr( $filename ,0,1) != ".")&&($checkApple===false)) {
 		
 		// Is it a movie file or directory?
-		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
+		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {
+                        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
 		        $tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
