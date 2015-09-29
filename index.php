@@ -26,7 +26,6 @@ $scriptDir = SITE_URL.'content/'.TVPLAYER_LOCATION;
 $sImageUrl = SITE_URL.'content/'.TVPLAYER_LOCATION;;
 $fullPathPrefix = ROOT_DIR.'/content/'.TVPLAYER_LOCATION;
 $sExternalUrl = SITE_URL.EXTERNAL_FOLDER.'/content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
-$sExternalEmage = ROOT_DIR.EXTERNAL_FOLDER.'\content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
 
 if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder"];}
 // echo "FolderName: ".$folderName;
@@ -67,7 +66,7 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 <hr>
 	  
 <?php
-
+echo $fullPathPrefix.'/';exit;
 $rootFolder = preg_replace( '~(\w)$~' , '$1' . DIRECTORY_SEPARATOR , realpath( getcwd() ) );
 $navCount=0;
 $moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION ;
@@ -125,10 +124,9 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 	// $filePath= 
 	// echo "filename:".$filename."</p>";
        // strpos($filename,'.','-4');
-        
      if  (file_exists ($fullPathPrefix.'/'.$filename )){
         
-        $folderName=$filename; 
+        $folderName=$filename;
      }
  	$title = substr( $filename ,0,strlen($filename)-4);
         $displayTitle = str_replace("-", ' ', $title);
@@ -142,7 +140,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
     
     	//$itemUrl = (EXTERNAL_TEXT == 1) ? SITE_URL.'/'.EXTERNAL_FOLDER.'/content/movies/test/'.$filename : SITE_URL.'/content/movies/test/'.$filename;//str_replace(SITE_URL,'', $filename);
         //$itemUrl = $sImageUrl.'/'.$folderName.'/'.$filename;
-      
+        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
 	$checkApple = strpos($itemUrl,".Apple");
 	$currentFolder = str_replace($filename, '', $itemUrl);
 		
@@ -151,8 +149,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 		
 		// Is it a movie file or directory?
 		if ($file->Isfile()  && (substr( $filename,-4) == ".mp4")) {		
-		        $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;			
-			$tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
+		        $tags = str_replace($scriptDir."/".$baseFolder,"",$currentFolder);
 			$tags = str_replace("/"," ",$tags);
 			// echo $tags."<br>";
 			$imageURLJPG = $title.$jpg;

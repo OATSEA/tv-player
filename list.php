@@ -1,5 +1,3 @@
-<link href="movies.css" rel="stylesheet">
-<link href="css/font-awesome.min.css" rel="stylesheet"></link>
 <?php
     $sDestination ='../../data/constants.php';
     require_once $sDestination;
@@ -21,9 +19,7 @@
     $sImageUrl = SITE_URL.'content/'.TVPLAYER_LOCATION;;
     $fullPathPrefix = ROOT_DIR.'/content/'.TVPLAYER_LOCATION;
     $sExternalUrl = SITE_URL.EXTERNAL_FOLDER.'/content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
-    $sExternalEmage = ROOT_DIR.EXTERNAL_FOLDER.'\content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION;
-    //$foldername = isset($_POST["folder_name"]) ? $_POST["folder_name"] : '';
-    $moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION.DIRECTORY_SEPARATOR.$folderName ;
+    $moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION.DIRECTORY_SEPARATOR.$folderName : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION.DIRECTORY_SEPARATOR.$folderName ;
 
     $dir = new RecursiveDirectoryIterator( $moviesDir,FilesystemIterator::SKIP_DOTS );
     foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST) as $file) 
@@ -42,7 +38,7 @@
 	$titleLen=8;
 	if (strlen($title)<=8) { $titleLen=strlen($title);}
 	$shortTitle = substr( $title ,0,$titleLen);
-    $itemID="'".$title."'";
+        $itemID="'".$title."'";
     
         $itemUrl = (EXTERNAL_TEXT == 1) ?  SITE_URL.'/'. EXTERNAL_FOLDER.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename:  SITE_URL.'/content/'.TVPLAYER_LOCATION.'/'.$folderName.'/'.$filename;//str_replace(SITE_URL,'', $filename);
         //$itemUrl = $fullPathPrefix.'/'.$folderName.'/'.$filename;
