@@ -45,23 +45,7 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 	<script src='jquery.imagefit.js'></script>
     <script src="movies.js"></script>
 	<script>$(document).ready(function() { setup(); }); </script>	
-        <script type="text/javascript">
-       var changeHandler = function(){                                           
-      //NB the following line requrires the libary from John Dyer                         
-      var fs = window.fullScreenApi.isFullScreen();
-      console.log("f" + (fs ? 'yes' : 'no' ));                               
-      if (fs) {                                                              
-        alert("In fullscreen, I should do something here");                  
-      }                                                                      
-      else {                                                                 
-        alert("NOT In fullscreen, I should do something here");              
-      }                                                                      
-   }                                                                         
-   document.addEventListener("fullscreenchange", changeHandler, false);      
-   document.addEventListener("webkitfullscreenchange", changeHandler, false);
-   document.addEventListener("mozfullscreenchange", changeHandler, false);
-
-         </script>
+        
 
 </head>
 <body class="main">
@@ -211,6 +195,16 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 				  Your browser does not support the video tag.
 			  </video> </div>
 		  ' ;
+                    echo "<script type='text/javascript'>
+        $('video#'"+$iconID+"').bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+    var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+    var event = state ? 'FullscreenOn' : 'FullscreenOff';
+
+    // Now do something interesting
+    alert('Event: ' + event);    
+});
+
+         </script>";
 		} 
 		} // END if is not apple
     } // END foreach
