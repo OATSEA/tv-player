@@ -17,6 +17,21 @@ function setup() {
 	// $('.videoclip').css( "border", "3px solid red" );
 	$('.videoclip').bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
 		var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+                
+                $('#overlay').addClass('hideMe');
+        
+                var doc = window.document;
+                var docEl = doc.documentElement;
+
+                var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+                if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                  requestFullScreen.call(docEl);
+                }
+                else {
+                  cancelFullScreen.call(doc);
+                }
 	    // var event = state ? 'FullscreenOn' : 'FullscreenOff';
 
 	    if (state==false) {
@@ -30,28 +45,6 @@ function setup() {
 	        
 	});	
 } // END setup
-$('body').keypress(function(e){
-   
-    if (keyCode == 27)
-{
-    history.back();
-
-    if (window.event)
-    {
-        // IE works fine anyways so this isn't really needed
-        e.cancelBubble = true;
-        e.returnValue = false;
-    }
-    else if (e.stopPropagation)
-    {
-        // In firefox, this is what keeps the escape key from canceling the history.back()
-        e.stopPropagation();
-        e.preventDefault();
-    }
-
-    return (false);
-}
-});
 		
 function playvid(value) {
 	var video = document.getElementById(value);
@@ -97,20 +90,20 @@ function videoEnded(value) {
 
 function doBack() {
 
-	$('#overlay').addClass('hideMe');
+    $('#overlay').addClass('hideMe');
         
-	var doc = window.document;
-  var docEl = doc.documentElement;
+    var doc = window.document;
+    var docEl = doc.documentElement;
 
-  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+    var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-    requestFullScreen.call(docEl);
-  }
-  else {
-    cancelFullScreen.call(doc);
-  }
+    if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+      requestFullScreen.call(docEl);
+    }
+    else {
+      cancelFullScreen.call(doc);
+    }
 
 } // END playvid
 
