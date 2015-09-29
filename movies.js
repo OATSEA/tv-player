@@ -59,12 +59,12 @@ function playvid(value) {
 	if(video.paused){
         //alert(video.played)
      // video.currentTime=500;
-            	video.addEventListener('click', function () {
-                    video.play();
-                }, false);
-                
-            
-		$('#overlay').addClass('hideMe');
+                jQuery( document ).ready(function($) {
+                $(value).click(function() {
+                $(this).get(0).paused ? $(this).get(0).play() : $(this).get(0).pause();
+           });
+              });   
+                   $('#overlay').addClass('hideMe');
                 if (video.requestFullscreen) {
                     video.requestFullscreen();
                   } else if (video.mozRequestFullScreen) {
@@ -73,17 +73,17 @@ function playvid(value) {
                     video.webkitRequestFullscreen();
                   }
        } else   {
-                   video.addEventListener('click', function () {
-                        video.pause();
-                    }, false);
-		   //$('#overlay').removeClass('hideMe');
-                   //$("#"+value).removeClass("showVideo");
-		   video.webkitExitFullScreen();
+                   
+		   $('#overlay').removeClass('hideMe');
+                   $("#"+value).removeClass("showVideo");
+		   //video.webkitExitFullScreen();
                 }
 	
 	// make this button highlighted to indicate played
 	var button = value+"_icon";
         $('#'+button).addClass("played");
+        
+      
 } // END playvid
 
 function videoEnded(value) {
