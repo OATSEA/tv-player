@@ -44,15 +44,6 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 	<script src='jquery.imagefit.js'></script>
     <script src="movies.js"></script>
     <script>$(document).ready(function() { setup(); }); </script>	
-    <script type="text/javascript">
-        document.addEventListener("fullscreenchange", function(event){
-    if(!document.fullscreenElement){
-        alert("hi");
-    } 
-}, false);
-
-         </script>
-
 </head>
 <body class="main">
 
