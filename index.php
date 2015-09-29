@@ -46,12 +46,24 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
     <script src="movies.js"></script>
 	<script>$(document).ready(function() { setup(); }); </script>	
         <script>
-        document.onkeydown = function (evt) {
-            
-           // alert("hiiiiiiii")
-       
-    if (evt.keyCode == 27) $(this).get(0).ended;
-}
+        $(document).keyup(function(e) {
+
+  if (e.keyCode == 27)
+  {
+      var doc = window.document;
+        var docEl = doc.documentElement;
+
+        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+        var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+        if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+          requestFullScreen.call(docEl);
+        }
+        else {
+          cancelFullScreen.call(doc);
+        }
+  }   // esc
+});
 
          </script>
 
