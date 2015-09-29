@@ -46,9 +46,20 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
     <script src="movies.js"></script>
 	<script>$(document).ready(function() { setup(); }); </script>	
         <script type="text/javascript">
-        $(document).on('webkitExitFullScreen', function()      {       
-  alert("Full Screen Closed"); 
-});
+       var changeHandler = function(){                                           
+      //NB the following line requrires the libary from John Dyer                         
+      var fs = window.fullScreenApi.isFullScreen();
+      console.log("f" + (fs ? 'yes' : 'no' ));                               
+      if (fs) {                                                              
+        alert("In fullscreen, I should do something here");                  
+      }                                                                      
+      else {                                                                 
+        alert("NOT In fullscreen, I should do something here");              
+      }                                                                      
+   }                                                                         
+   document.addEventListener("fullscreenchange", changeHandler, false);      
+   document.addEventListener("webkitfullscreenchange", changeHandler, false);
+   document.addEventListener("mozfullscreenchange", changeHandler, false);
 
          </script>
 
