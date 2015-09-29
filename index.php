@@ -198,7 +198,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
                         $iconID=$title."_icon";
                         //<img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" />
 		    echo '<div class="myfig"><img onClick="playvid('.$itemID.');" class="videoicon" id="'.$iconID.'" width="320" height="240" src="'.$imageURL.'" /><p class="imgtitle">'.$displayTitle.'</p>';
-                    echo '<video onClick="playvid('.$itemID.');" class="videoclip" id="'.$title.'" width="1" height="1" controls preload="none" onended="videoEnded('.$itemID.')" src="'.$itemUrl.'">
+                    echo '<video onClick="playvid('.$itemID.');" class="videoclip" id="'.$title.'" width="1" height="1" controls preload="none" onended="videoEnded('.$itemID.')">
 			  <source src="'.$itemUrl.'" type="video/mp4"> 
 				  Your browser does not support the video tag.
 			  </video> </div>
