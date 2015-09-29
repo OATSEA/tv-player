@@ -18,20 +18,6 @@ function setup() {
 	$('.videoclip').bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
 		var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
                 
-                $('#overlay').addClass('hideMe');
-        
-                var doc = window.document;
-                var docEl = doc.documentElement;
-
-                var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-                var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-                if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                  requestFullScreen.call(docEl);
-                }
-                else {
-                  cancelFullScreen.call(doc);
-                }
 	    // var event = state ? 'FullscreenOn' : 'FullscreenOff';
 
 	    if (state==false) {
