@@ -90,8 +90,7 @@ function videoEnded(value) {
 	// alert(value);
        
 	var video = document.getElementById(value);
-        alert(video)
-     	//video.webkitExitFullScreen();
+        //video.webkitExitFullScreen();
         
 
 } // END playvid

@@ -66,7 +66,6 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
 <hr>
 	  
 <?php
-echo $fullPathPrefix.'/';exit;
 $rootFolder = preg_replace( '~(\w)$~' , '$1' . DIRECTORY_SEPARATOR , realpath( getcwd() ) );
 $navCount=0;
 $moviesDir =(EXTERNAL_TEXT == 1) ? ROOT_DIR.DIRECTORY_SEPARATOR.EXTERNAL_FOLDER.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION : ROOT_DIR.DIRECTORY_SEPARATOR.'content'.DIRECTORY_SEPARATOR.TVPLAYER_LOCATION ;
@@ -211,7 +210,7 @@ echo "<hr>";
 // } // end "Movies" foldername check 
 ?>
 </div>
-<div id="overlay" class="hideMe" onClick="doBack(<?php echo $fullPathPrefix; ?>)" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
+<div id="overlay" class="hideMe" onClick="doBack(<?php echo $_SERVER['PHP_SELF']; ?>)" onTouchStart="doBack()"><i class="videoBack fa fa-arrow-circle-left fa-5x"></i></div>
 <div id="update"><center><a href="index.php">Update</a></center><br><br></div>	  	
 </body>
 </html>
