@@ -46,12 +46,9 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
     <script src="movies.js"></script>
 	<script>$(document).ready(function() { setup(); }); </script>	
         <script type="text/javascript">
-        document.onkeydown = function(evt) {
-    evt = evt || window.event;
-    if (evt.keyCode == 27) {
-        alert("Escape");
-    }
-};
+        $(document).on('webkitExitFullScreen', function()      {       
+  alert("Full Screen Closed"); 
+});
 
          </script>
 
