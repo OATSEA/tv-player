@@ -194,18 +194,18 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 				  Your browser does not support the video tag.
 			  </video> </div>
 		  ' ;
+                    ?>
+                        <script type="text/javascript">
+                            $(document).ready(function(){
+                              var video = document.getElementById("<?php echo $itemID ?>");
+                                video.addEventListener('click',function(){
+                                  video.play();
+                                },false);  
+                            });
+                    </script>
+                    <?php
 		} 
 		} // END if is not apple
-                ?>
-                    <script type="text/javascript">
-                    $(document).ready(function(){
-                      var video = document.getElementById("<?php echo $itemID ?>");
-                        video.addEventListener('click',function(){
-                          video.play();
-                        },false);  
-                    });
-                    </script>
-<?php
     } // END foreach
 echo "<hr>";
 // } // end "Movies" foldername check 
