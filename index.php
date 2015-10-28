@@ -43,7 +43,9 @@ if (isset($_GET["folder"])&& !empty($_GET["folder"])) {$folderName=$_GET["folder
     <script src="jquery.js"></script>
 	<script src='jquery.imagefit.js'></script>
     <script src="movies.js"></script>
-    <script>$(document).ready(function() { setup(); }); </script>	
+    <script>
+        $(document).ready(function() { setup(); }); 
+    </script>	
 </head>
 <body class="main">
 
@@ -194,6 +196,16 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
 		  ' ;
 		} 
 		} // END if is not apple
+                ?>
+                    <script type="text/javascript">
+                    $(document).ready(function(){
+                      var video = document.getElementById("<?php echo $itemID ?>");
+                        video.addEventListener('click',function(){
+                          video.play();
+                        },false);  
+                    });
+                    </script>
+<?php
     } // END foreach
 echo "<hr>";
 // } // end "Movies" foldername check 

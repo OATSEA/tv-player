@@ -4,8 +4,6 @@ function setup() {
 	    $('.myfig').imagefit();
 		$('.mybutton').imagefit();	
 	});
-	
-	
 	/*
 	document.ontouchmove = function(event) {
 	// prevent screen scroll / bounce for iOS devices
@@ -35,6 +33,11 @@ function setup() {
 function playvid(value) {
 	var video = document.getElementById(value);
        // alert(video)
+       
+       var video = document.getElementById('video');
+        video.addEventListener('click',function(){
+          video.play();
+        },false);
 	if(video.paused){
         //alert(video.played)
      // video.currentTime=500;
