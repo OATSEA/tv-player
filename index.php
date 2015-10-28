@@ -197,7 +197,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
                     ?>
                         <script type="text/javascript">
                             $(document).ready(function(){
-                              var video = document.getElementById("<?php echo $itemID ?>");
+                              var video = document.getElementById(<?php echo $itemID ?>);
                                 video.addEventListener('click',function(){
                                   video.play();
                                 },false);  
