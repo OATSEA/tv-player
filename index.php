@@ -202,7 +202,7 @@ foreach(new RecursiveIteratorIterator($dir,RecursiveIteratorIterator::SELF_FIRST
                                   video.play();
                                 },false);  
                             });
-                    </script>
+                        </script>
                     <?php
 		} 
 		} // END if is not apple
